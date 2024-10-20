@@ -25,16 +25,13 @@ import {
   FormField,
   FormItem,
 } from "@/components/ui/form";
-
-const formSchema = z.object({
-  name: z.string().min(1, "Required"),
-  email: z.string().email(),
-  password: z.string().min(8, "Required "),
-});
+import { signUpSchema } from "../schemas";
+import { useSignUp } from "../api/use-signup";
 
 const SignUpCard = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const { mutate } = useSignUp();
+  const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -42,8 +39,8 @@ const SignUpCard = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
+  const onSubmit = (data: z.infer<typeof signUpSchema>) => {
+    mutate({ json: data });
   };
   return (
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
@@ -57,6 +54,7 @@ const SignUpCard = () => {
           </Link>{" "}
           and
           <Link href={"/terms"}>
+            {" "}
             <span className="text-blue-700">Terms of Services</span>
           </Link>
         </CardDescription>
@@ -124,7 +122,7 @@ const SignUpCard = () => {
               )}
             />
             <Button className="w-full" size={"lg"} disabled={false}>
-              Login
+              Sign Up
             </Button>
           </form>
         </Form>
