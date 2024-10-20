@@ -29,7 +29,7 @@ import { signUpSchema } from "../schemas";
 import { useSignUp } from "../api/use-signup";
 
 const SignUpCard = () => {
-  const { mutate } = useSignUp();
+  const { mutate, isPending } = useSignUp();
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -76,7 +76,7 @@ const SignUpCard = () => {
                       {...field}
                       type="text"
                       placeholder="Enter your name"
-                      disabled={false}
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage />
@@ -95,7 +95,7 @@ const SignUpCard = () => {
                       {...field}
                       type="email"
                       placeholder="example@gmail.com"
-                      disabled={false}
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage />
@@ -114,14 +114,14 @@ const SignUpCard = () => {
                       {...field}
                       type="password"
                       placeholder="Enter your password"
-                      disabled={false}
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button className="w-full" size={"lg"} disabled={false}>
+            <Button className="w-full" size={"lg"} disabled={isPending}>
               Sign Up
             </Button>
           </form>
@@ -132,7 +132,7 @@ const SignUpCard = () => {
       </div>
       <CardContent className="p-7 flex flex-col gap-y-4">
         <Button
-          disabled={false}
+          disabled={isPending}
           variant={"secondary"}
           size={"lg"}
           className="w-full"
@@ -141,7 +141,7 @@ const SignUpCard = () => {
           Login with Google
         </Button>
         <Button
-          disabled={false}
+          disabled={isPending}
           variant={"secondary"}
           size={"lg"}
           className="w-full"

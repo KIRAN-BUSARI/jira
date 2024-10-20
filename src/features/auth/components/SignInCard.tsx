@@ -29,7 +29,7 @@ import { loginSchema } from "../schemas";
 import { useLogin } from "../api/use-login";
 
 const SignInCard = () => {
-  const { mutate } = useLogin();
+  const { mutate, isPending } = useLogin();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -66,7 +66,7 @@ const SignInCard = () => {
                       {...field}
                       type="email"
                       placeholder="example@gmail.com"
-                      disabled={false}
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage />
@@ -84,14 +84,14 @@ const SignInCard = () => {
                       {...field}
                       type="password"
                       placeholder="Enter your password"
-                      disabled={false}
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button className="w-full" size={"lg"} disabled={false}>
+            <Button className="w-full" size={"lg"} disabled={isPending}>
               Login
             </Button>
           </form>
@@ -102,7 +102,7 @@ const SignInCard = () => {
       </div>
       <CardContent className="flex flex-col space-y-4 p-7">
         <Button
-          disabled={false}
+          disabled={isPending}
           variant={"secondary"}
           size={"lg"}
           className="w-full"
@@ -111,7 +111,7 @@ const SignInCard = () => {
           Login with Google
         </Button>
         <Button
-          disabled={false}
+          disabled={isPending}
           variant={"secondary"}
           size={"lg"}
           className="w-full"

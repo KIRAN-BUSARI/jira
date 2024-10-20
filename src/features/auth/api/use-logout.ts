@@ -4,15 +4,15 @@ import { InferRequestType, InferResponseType } from "hono";
 import { client } from "@/lib/rpc";
 import { useRouter } from "next/navigation";
 
-type ResponseType = InferResponseType<(typeof client.api.auth.login)["$post"]>;
-type RequestType = InferRequestType<(typeof client.api.auth.login)["$post"]>;
+type ResponseType = InferResponseType<(typeof client.api.auth.logout)["$post"]>;
+type RequestType = InferRequestType<(typeof client.api.auth.logout)["$post"]>;
 
-export const useLogin = () => {
+export const useLogout = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const mutation = useMutation<ResponseType, Error, RequestType>({
-    mutationFn: async ({ json }) => {
-      const res = await client.api.auth.login["$post"]({ json });
+    mutationFn: async () => {
+      const res = await client.api.auth.logout["$post"]();
       return await res.json();
     },
     onSuccess: () => {
